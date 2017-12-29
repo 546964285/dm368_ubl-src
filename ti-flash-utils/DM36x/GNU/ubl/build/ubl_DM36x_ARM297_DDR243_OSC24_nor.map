@@ -1,0 +1,271 @@
+
+Allocating common symbols
+Common symbol       size              file
+
+gEntryPoint         0x4               ubl_DM36x_ARM297_DDR243_OSC24_nor.o
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+*default*        0x00000000         0xffffffff
+
+Linker script and memory map
+
+                0x02000000                EMIFStart = 0x2000000
+                0x02000000                EMIFSize = 0x2000000
+                0x00000000                IRAMStart = 0x0
+                0x00008000                IRAMSize = 0x8000
+                0x00010000                DRAMStart = 0x10000
+                0x00008000                DRAMSize = 0x8000
+                0x80000000                DDRStart = 0x80000000
+                0x10000000                DDRSize = 0x10000000
+                0x80000000                EXTERNAL_RAM_START = 0x80000000
+                0x90000000                EXTERNAL_RAM_END = (EXTERNAL_RAM_START + DDRSize)
+                0x00018000                STACKStart = (DRAMStart + DRAMSize)
+                0x02000000                . = EMIFStart
+                0x02000000                __selfcopysrc = EMIFStart
+                0x00010020                __selfcopydest = (DRAMStart + 0x20)
+
+.selfcopy       0x02000000       0xe0 load address 0x00000000
+ *(.selfcopy)
+ .selfcopy      0x02000000       0x64 selfcopy_DM36x_ARM297_DDR243_OSC24_nor.o
+                0x02000050                _dramstart
+                0x0200005c                _selfcopydest
+                0x02000000                selfcopy
+                0x02000058                _selfcopysrc
+                0x02000060                _selfcopysrcend
+                0x020000e0                . = 0xe0
+ *fill*         0x02000064       0x7c 00
+                0x00000100                . = 0x100
+
+.boot           0x00000100       0x4c load address 0x000000e0
+ *(.boot)
+ .boot          0x00000100       0x4c boot_DM36x_ARM297_DDR243_OSC24_nor.o
+                0x00000100                boot
+                0x00000148                _stack
+                0x0000014c                . = ALIGN (0x4)
+
+.text           0x00000160     0x2900 load address 0x00000140
+ *(.text)
+ .text          0x00000160      0x118 ubl_DM36x_ARM297_DDR243_OSC24_nor.o
+                0x00000160                main
+ .text          0x00000278        0x0 boot_DM36x_ARM297_DDR243_OSC24_nor.o
+ .text          0x00000278        0x0 selfcopy_DM36x_ARM297_DDR243_OSC24_nor.o
+ .text          0x00000278      0x1d8 uartboot_DM36x_ARM297_DDR243_OSC24_nor.o
+                0x00000280                UARTBOOT_copy
+ .text          0x00000450      0xa0c device_DM36x_ARM297_DDR243_OSC24_nor.o
+                0x000007a0                DEVICE_I2C0Init
+                0x00000884                DEVICE_TIMER0Status
+                0x00000950                DEVICE_DDR2Init
+                0x00000818                DEVICE_TIMER0Start
+                0x000005a4                DEVICE_LPSCTransition
+                0x00000d38                DEVICE_init
+                0x0000062c                DEVICE_pinmuxControl
+                0x00000c0c                DEVICE_PLL1Init
+                0x000007d4                DEVICE_TIMER0Init
+                0x0000072c                DDR_Get_Val
+                0x00000550                POR_RESET
+                0x000004d8                WDT_RESET
+                0x00000764                DEVICE_EMIFInit
+                0x00000898                DEVICE_I2C0Reset
+                0x00000ae8                DEVICE_PLL2Init
+                0x00000450                WDT_FLAG_ON
+                0x00000650                DEVICE_bootMode
+                0x000008f4                DEVICE_UART0Init
+                0x0000067c                DEVICE_PSCInit
+                0x00000480                VPSS_SYNC_RESET
+                0x00000664                DEVICE_emifBusWidth
+                0x00000854                DEVICE_TIMER0Stop
+ .text          0x00000e5c       0x4c debug_DM36x_ARM297_DDR243_OSC24_nor.o
+                0x00000e78                DEBUG_readString
+                0x00000e5c                DEBUG_readChar
+                0x00000e7c                DEBUG_printString
+                0x00000e84                DEBUG_printHexInt
+ .text          0x00000ea8      0x388 uart_DM36x_ARM297_DDR243_OSC24_nor.o
+                0x000011dc                UART_sendHexInt
+                0x00001094                UART_recvStringN
+                0x00000ffc                UART_checkSequence
+                0x00001154                UART_sendString
+                0x00000ee0                UART_recvHexData
+                0x00001138                UART_recvString
+ .text          0x00001230      0x25c util_DM36x_ARM297_DDR243_OSC24_nor.o
+                0x0000142c                UTIL_buildCRC32Table
+                0x00001250                UTIL_allocMem
+                0x00001328                UTIL_calcCRC16
+                0x00001298                UTIL_callocMem
+                0x000012c4                UTIL_waitLoop
+                0x000012e0                UTIL_waitLoopAccurate
+                0x000012e4                UTIL_calcCRC32
+                0x000013bc                UTIL_buildCRC16Table
+                0x00001230                UTIL_getCurrMemPtr
+                0x00001240                UTIL_setCurrMemPtr
+ .text          0x0000148c     0x1344 nor_DM36x_ARM297_DDR243_OSC24_nor.o
+                0x00001524                NOR_reset
+                0x000020c8                NOR_writeBytes
+                0x000023f4                NOR_open
+                0x000022a8                NOR_erase
+                0x000023e8                NOR_globalErase
+                0x0000148c                NOR_getBlockInfo
+ .text          0x000027d0       0xd8 norboot_DM36x_ARM297_DDR243_OSC24_nor.o
+                0x000027d0                NORBOOT_copy
+ .text          0x000028a8       0xc4 /tmp/ccEFS77p.o
+                0x000028a8                __udivsi3
+                0x000028a8                __aeabi_uidiv
+                0x0000293c                __aeabi_uidivmod
+                0x00002954                __aeabi_idivmod
+ *fill*         0x0000296c       0x14 00
+ .text          0x00002980       0xe0 /tmp/ccYHDD35.o
+                0x00002980                __aeabi_idiv
+                0x00002980                __divsi3
+                0x00002a60                . = ALIGN (0x4)
+
+.glue_7         0x00002a60        0x0 load address 0x00002a40
+ .glue_7        0x00000000        0x0 linker stubs
+
+.glue_7t        0x00002a60        0x0 load address 0x00002a40
+ .glue_7t       0x00000000        0x0 linker stubs
+
+.vfp11_veneer   0x00002a60        0x0 load address 0x00002a40
+ .vfp11_veneer  0x00000000        0x0 linker stubs
+
+.v4_bx          0x00002a60        0x0 load address 0x00002a40
+ .v4_bx         0x00000000        0x0 linker stubs
+                0x00012a60                . = (. + (DRAMStart - IRAMStart))
+
+.rodata         0x00012a60      0x400 load address 0x00002a40
+ *(.rodata*)
+ .rodata.str1.1
+                0x00012a60       0xce ubl_DM36x_ARM297_DDR243_OSC24_nor.o
+                                 0xd2 (size before relaxing)
+ .rodata.str1.1
+                0x00012b2e       0x90 uartboot_DM36x_ARM297_DDR243_OSC24_nor.o
+ *fill*         0x00012bbe        0x2 00
+ .rodata        0x00012bc0        0x4 device_DM36x_ARM297_DDR243_OSC24_nor.o
+                0x00012bc0                devString
+ .rodata.str1.1
+                0x00012bc4        0x6 device_DM36x_ARM297_DDR243_OSC24_nor.o
+ .rodata.str1.1
+                0x00012bca        0x3 debug_DM36x_ARM297_DDR243_OSC24_nor.o
+ *fill*         0x00012bcd        0x3 00
+ .rodata        0x00012bd0       0x3c nor_DM36x_ARM297_DDR243_OSC24_nor.o
+                0x00012bf8                Unsupported_NOR_FxnsTable
+                0x00012be4                Intel_NOR_FxnsTable
+                0x00012bd0                AMD_NOR_FxnsTable
+ .rodata.str1.1
+                0x00012c0c      0x23d nor_DM36x_ARM297_DDR243_OSC24_nor.o
+                                0x24e (size before relaxing)
+ .rodata.str1.1
+                0x00012e49       0x17 norboot_DM36x_ARM297_DDR243_OSC24_nor.o
+ *(.rodata)
+                0x00012e60                . = ALIGN (0x4)
+
+.data           0x00012e60        0x0 load address 0x00002e40
+ *(.data)
+ .data          0x00012e60        0x0 ubl_DM36x_ARM297_DDR243_OSC24_nor.o
+ .data          0x00012e60        0x0 boot_DM36x_ARM297_DDR243_OSC24_nor.o
+ .data          0x00012e60        0x0 selfcopy_DM36x_ARM297_DDR243_OSC24_nor.o
+ .data          0x00012e60        0x0 uartboot_DM36x_ARM297_DDR243_OSC24_nor.o
+ .data          0x00012e60        0x0 device_DM36x_ARM297_DDR243_OSC24_nor.o
+ .data          0x00012e60        0x0 debug_DM36x_ARM297_DDR243_OSC24_nor.o
+ .data          0x00012e60        0x0 uart_DM36x_ARM297_DDR243_OSC24_nor.o
+ .data          0x00012e60        0x0 util_DM36x_ARM297_DDR243_OSC24_nor.o
+ .data          0x00012e60        0x0 nor_DM36x_ARM297_DDR243_OSC24_nor.o
+ .data          0x00012e60        0x0 norboot_DM36x_ARM297_DDR243_OSC24_nor.o
+ .data          0x00012e60        0x0 /tmp/ccEFS77p.o
+ .data          0x00012e60        0x0 /tmp/ccYHDD35.o
+                0x00012e60                . = ALIGN (0x4)
+                0x02002e2c                __selfcopysrcend = (((((__selfcopysrc + SIZEOF (.selfcopy)) + SIZEOF (.boot)) + SIZEOF (.text)) + SIZEOF (.data)) + SIZEOF (.rodata))
+
+.bss            0x00012e60        0xc load address 0x00002e40
+ *(.bss)
+ .bss           0x00012e60        0x4 ubl_DM36x_ARM297_DDR243_OSC24_nor.o
+ .bss           0x00012e64        0x0 boot_DM36x_ARM297_DDR243_OSC24_nor.o
+ .bss           0x00012e64        0x0 selfcopy_DM36x_ARM297_DDR243_OSC24_nor.o
+ .bss           0x00012e64        0x0 uartboot_DM36x_ARM297_DDR243_OSC24_nor.o
+ .bss           0x00012e64        0x0 device_DM36x_ARM297_DDR243_OSC24_nor.o
+ .bss           0x00012e64        0x0 debug_DM36x_ARM297_DDR243_OSC24_nor.o
+ .bss           0x00012e64        0x0 uart_DM36x_ARM297_DDR243_OSC24_nor.o
+ .bss           0x00012e64        0x4 util_DM36x_ARM297_DDR243_OSC24_nor.o
+ .bss           0x00012e68        0x0 nor_DM36x_ARM297_DDR243_OSC24_nor.o
+ .bss           0x00012e68        0x0 norboot_DM36x_ARM297_DDR243_OSC24_nor.o
+ .bss           0x00012e68        0x0 /tmp/ccEFS77p.o
+ .bss           0x00012e68        0x0 /tmp/ccYHDD35.o
+ *(COMMON)
+ COMMON         0x00012e68        0x4 ubl_DM36x_ARM297_DDR243_OSC24_nor.o
+                0x00012e68                gEntryPoint
+                0x00012e6c                . = ALIGN (0x4)
+LOAD ubl_DM36x_ARM297_DDR243_OSC24_nor.o
+LOAD boot_DM36x_ARM297_DDR243_OSC24_nor.o
+LOAD selfcopy_DM36x_ARM297_DDR243_OSC24_nor.o
+LOAD uartboot_DM36x_ARM297_DDR243_OSC24_nor.o
+LOAD device_DM36x_ARM297_DDR243_OSC24_nor.o
+LOAD debug_DM36x_ARM297_DDR243_OSC24_nor.o
+LOAD uart_DM36x_ARM297_DDR243_OSC24_nor.o
+LOAD util_DM36x_ARM297_DDR243_OSC24_nor.o
+LOAD nor_DM36x_ARM297_DDR243_OSC24_nor.o
+LOAD norboot_DM36x_ARM297_DDR243_OSC24_nor.o
+LOAD /tmp/ccEFS77p.o
+LOAD /tmp/ccYHDD35.o
+OUTPUT(ubl_DM36x_ARM297_DDR243_OSC24_nor elf32-littlearm)
+
+.comment        0x00000000      0x1ae
+ .comment       0x00000000       0x2b ubl_DM36x_ARM297_DDR243_OSC24_nor.o
+ .comment       0x0000002b       0x2b boot_DM36x_ARM297_DDR243_OSC24_nor.o
+ .comment       0x00000056       0x2b selfcopy_DM36x_ARM297_DDR243_OSC24_nor.o
+ .comment       0x00000081       0x2b uartboot_DM36x_ARM297_DDR243_OSC24_nor.o
+ .comment       0x000000ac       0x2b device_DM36x_ARM297_DDR243_OSC24_nor.o
+ .comment       0x000000d7       0x2b debug_DM36x_ARM297_DDR243_OSC24_nor.o
+ .comment       0x00000102       0x2b uart_DM36x_ARM297_DDR243_OSC24_nor.o
+ .comment       0x0000012d       0x2b util_DM36x_ARM297_DDR243_OSC24_nor.o
+ .comment       0x00000158       0x2b nor_DM36x_ARM297_DDR243_OSC24_nor.o
+ .comment       0x00000183       0x2b norboot_DM36x_ARM297_DDR243_OSC24_nor.o
+
+.note.GNU-stack
+                0x00000000        0x0
+ .note.GNU-stack
+                0x00000000        0x0 ubl_DM36x_ARM297_DDR243_OSC24_nor.o
+ .note.GNU-stack
+                0x00000000        0x0 boot_DM36x_ARM297_DDR243_OSC24_nor.o
+ .note.GNU-stack
+                0x00000000        0x0 selfcopy_DM36x_ARM297_DDR243_OSC24_nor.o
+ .note.GNU-stack
+                0x00000000        0x0 uartboot_DM36x_ARM297_DDR243_OSC24_nor.o
+ .note.GNU-stack
+                0x00000000        0x0 device_DM36x_ARM297_DDR243_OSC24_nor.o
+ .note.GNU-stack
+                0x00000000        0x0 debug_DM36x_ARM297_DDR243_OSC24_nor.o
+ .note.GNU-stack
+                0x00000000        0x0 uart_DM36x_ARM297_DDR243_OSC24_nor.o
+ .note.GNU-stack
+                0x00000000        0x0 util_DM36x_ARM297_DDR243_OSC24_nor.o
+ .note.GNU-stack
+                0x00000000        0x0 nor_DM36x_ARM297_DDR243_OSC24_nor.o
+ .note.GNU-stack
+                0x00000000        0x0 norboot_DM36x_ARM297_DDR243_OSC24_nor.o
+
+.ARM.attributes
+                0x00000000       0x2f
+ .ARM.attributes
+                0x00000000       0x31 ubl_DM36x_ARM297_DDR243_OSC24_nor.o
+ .ARM.attributes
+                0x00000031       0x31 boot_DM36x_ARM297_DDR243_OSC24_nor.o
+ .ARM.attributes
+                0x00000062       0x31 selfcopy_DM36x_ARM297_DDR243_OSC24_nor.o
+ .ARM.attributes
+                0x00000093       0x31 uartboot_DM36x_ARM297_DDR243_OSC24_nor.o
+ .ARM.attributes
+                0x000000c4       0x31 device_DM36x_ARM297_DDR243_OSC24_nor.o
+ .ARM.attributes
+                0x000000f5       0x31 debug_DM36x_ARM297_DDR243_OSC24_nor.o
+ .ARM.attributes
+                0x00000126       0x31 uart_DM36x_ARM297_DDR243_OSC24_nor.o
+ .ARM.attributes
+                0x00000157       0x31 util_DM36x_ARM297_DDR243_OSC24_nor.o
+ .ARM.attributes
+                0x00000188       0x31 nor_DM36x_ARM297_DDR243_OSC24_nor.o
+ .ARM.attributes
+                0x000001b9       0x31 norboot_DM36x_ARM297_DDR243_OSC24_nor.o
+ .ARM.attributes
+                0x000001ea       0x14 /tmp/ccEFS77p.o
+ .ARM.attributes
+                0x000001fe       0x14 /tmp/ccYHDD35.o

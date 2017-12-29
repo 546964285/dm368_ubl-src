@@ -1,0 +1,295 @@
+
+Allocating common symbols
+Common symbol       size              file
+
+gNandBoot           0x18              nandboot_DM36x_ARM270_DDR216_OSC24_nand.o
+gEntryPoint         0x4               ubl_DM36x_ARM270_DDR216_OSC24_nand.o
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+*default*        0x00000000         0xffffffff
+
+Linker script and memory map
+
+                0x02000000                EMIFStart = 0x2000000
+                0x02000000                EMIFSize = 0x2000000
+                0x00000000                IRAMStart = 0x0
+                0x00008000                IRAMSize = 0x8000
+                0x00010000                DRAMStart = 0x10000
+                0x00008000                DRAMSize = 0x8000
+                0x80000000                DDRStart = 0x80000000
+                0x10000000                DDRSize = 0x10000000
+                0x80000000                EXTERNAL_RAM_START = 0x80000000
+                0x90000000                EXTERNAL_RAM_END = (EXTERNAL_RAM_START + DDRSize)
+                0x00018000                STACKStart = (DRAMStart + DRAMSize)
+                0x02000000                . = EMIFStart
+                0x02000000                __selfcopysrc = EMIFStart
+                0x00010020                __selfcopydest = (DRAMStart + 0x20)
+
+.selfcopy       0x02000000       0xe0 load address 0x00000000
+ *(.selfcopy)
+ .selfcopy      0x02000000       0x64 selfcopy_DM36x_ARM270_DDR216_OSC24_nand.o
+                0x02000050                _dramstart
+                0x0200005c                _selfcopydest
+                0x02000000                selfcopy
+                0x02000058                _selfcopysrc
+                0x02000060                _selfcopysrcend
+                0x020000e0                . = 0xe0
+ *fill*         0x02000064       0x7c 00
+                0x00000100                . = 0x100
+
+.boot           0x00000100       0x4c load address 0x000000e0
+ *(.boot)
+ .boot          0x00000100       0x4c boot_DM36x_ARM270_DDR216_OSC24_nand.o
+                0x00000100                boot
+                0x00000148                _stack
+                0x0000014c                . = ALIGN (0x4)
+
+.text           0x00000160     0x3200 load address 0x00000140
+ *(.text)
+ .text          0x00000160      0x124 ubl_DM36x_ARM270_DDR216_OSC24_nand.o
+                0x00000160                main
+ .text          0x00000284        0x0 boot_DM36x_ARM270_DDR216_OSC24_nand.o
+ .text          0x00000284        0x0 selfcopy_DM36x_ARM270_DDR216_OSC24_nand.o
+ .text          0x00000284      0x1d8 uartboot_DM36x_ARM270_DDR216_OSC24_nand.o
+                0x0000028c                UARTBOOT_copy
+ .text          0x0000045c      0xa00 device_DM36x_ARM270_DDR216_OSC24_nand.o
+                0x000007ac                DEVICE_I2C0Init
+                0x00000890                DEVICE_TIMER0Status
+                0x0000095c                DEVICE_DDR2Init
+                0x00000824                DEVICE_TIMER0Start
+                0x000005b0                DEVICE_LPSCTransition
+                0x00000d38                DEVICE_init
+                0x00000638                DEVICE_pinmuxControl
+                0x00000c14                DEVICE_PLL1Init
+                0x000007e0                DEVICE_TIMER0Init
+                0x00000738                DDR_Get_Val
+                0x0000055c                POR_RESET
+                0x000004e4                WDT_RESET
+                0x00000770                DEVICE_EMIFInit
+                0x000008a4                DEVICE_I2C0Reset
+                0x00000af4                DEVICE_PLL2Init
+                0x0000045c                WDT_FLAG_ON
+                0x0000065c                DEVICE_bootMode
+                0x00000900                DEVICE_UART0Init
+                0x00000688                DEVICE_PSCInit
+                0x0000048c                VPSS_SYNC_RESET
+                0x00000670                DEVICE_emifBusWidth
+                0x00000860                DEVICE_TIMER0Stop
+ .text          0x00000e5c       0x4c debug_DM36x_ARM270_DDR216_OSC24_nand.o
+                0x00000e78                DEBUG_readString
+                0x00000e5c                DEBUG_readChar
+                0x00000e7c                DEBUG_printString
+                0x00000e84                DEBUG_printHexInt
+ .text          0x00000ea8      0x388 uart_DM36x_ARM270_DDR216_OSC24_nand.o
+                0x000011dc                UART_sendHexInt
+                0x00001094                UART_recvStringN
+                0x00000ffc                UART_checkSequence
+                0x00001154                UART_sendString
+                0x00000ee0                UART_recvHexData
+                0x00001138                UART_recvString
+ .text          0x00001230      0x25c util_DM36x_ARM270_DDR216_OSC24_nand.o
+                0x0000142c                UTIL_buildCRC32Table
+                0x00001250                UTIL_allocMem
+                0x00001328                UTIL_calcCRC16
+                0x00001298                UTIL_callocMem
+                0x000012c4                UTIL_waitLoop
+                0x000012e0                UTIL_waitLoopAccurate
+                0x000012e4                UTIL_calcCRC32
+                0x000013bc                UTIL_buildCRC16Table
+                0x00001230                UTIL_getCurrMemPtr
+                0x00001240                UTIL_setCurrMemPtr
+ .text          0x0000148c     0x155c nand_DM36x_ARM270_DDR216_OSC24_nand.o
+                0x000025f4                NAND_eraseBlocks_with_bb_check
+                0x00001e2c                NAND_badBlockCheck
+                0x00002554                NAND_unProtectBlocks
+                0x00001be8                NAND_badBlockMark
+                0x00001878                NAND_writePage
+                0x00002744                NAND_globalErase
+                0x00001cbc                NAND_readSpareBytesOfPage
+                0x0000252c                NAND_protectBlocks
+                0x000026a8                NAND_globalErase_with_bb_check
+                0x00002824                NAND_verifyPage
+                0x0000176c                NAND_reset
+                0x00001f38                NAND_readPage
+                0x00001528                NAND_isWriteProtected
+                0x00002754                NAND_verifyBlockErased
+                0x000028d8                NAND_open
+                0x000026b8                NAND_eraseBlocks
+                0x00001abc                NAND_writeOnlySpareBytesOfPage
+ .text          0x000029e8      0x214 nandboot_DM36x_ARM270_DDR216_OSC24_nand.o
+                0x000029e8                NANDBOOT_copy
+ .text          0x00002bfc      0x5bc device_nand_DM36x_ARM270_DDR216_OSC24_nand.o
+ .text          0x000031b8       0xc4 /tmp/ccqvDxFM.o
+                0x000031b8                __udivsi3
+                0x000031b8                __aeabi_uidiv
+                0x0000324c                __aeabi_uidivmod
+                0x00003264                __aeabi_idivmod
+ *fill*         0x0000327c        0x4 00
+ .text          0x00003280       0xe0 /tmp/cczd4xk8.o
+                0x00003280                __aeabi_idiv
+                0x00003280                __divsi3
+                0x00003360                . = ALIGN (0x4)
+
+.glue_7         0x00003360        0x0 load address 0x00003340
+ .glue_7        0x00000000        0x0 linker stubs
+
+.glue_7t        0x00003360        0x0 load address 0x00003340
+ .glue_7t       0x00000000        0x0 linker stubs
+
+.vfp11_veneer   0x00003360        0x0 load address 0x00003340
+ .vfp11_veneer  0x00000000        0x0 linker stubs
+
+.v4_bx          0x00003360        0x0 load address 0x00003340
+ .v4_bx         0x00000000        0x0 linker stubs
+                0x00013360                . = (. + (DRAMStart - IRAMStart))
+
+.rodata         0x00013360      0x464 load address 0x00003340
+ *(.rodata*)
+ .rodata.str1.1
+                0x00013360       0xd6 ubl_DM36x_ARM270_DDR216_OSC24_nand.o
+                                 0xda (size before relaxing)
+ .rodata.str1.1
+                0x00013436       0x90 uartboot_DM36x_ARM270_DDR216_OSC24_nand.o
+ *fill*         0x000134c6        0x2 00
+ .rodata        0x000134c8        0x4 device_DM36x_ARM270_DDR216_OSC24_nand.o
+                0x000134c8                devString
+ .rodata.str1.1
+                0x000134cc        0x6 device_DM36x_ARM270_DDR216_OSC24_nand.o
+ .rodata.str1.1
+                0x000134d2        0x3 debug_DM36x_ARM270_DDR216_OSC24_nand.o
+ .rodata.str1.1
+                0x000134d5       0xdc nand_DM36x_ARM270_DDR216_OSC24_nand.o
+                                 0xe3 (size before relaxing)
+ .rodata.str1.1
+                0x000135b1       0xb7 nandboot_DM36x_ARM270_DDR216_OSC24_nand.o
+                                 0xd9 (size before relaxing)
+ .rodata        0x00013668      0x15c device_nand_DM36x_ARM270_DDR216_OSC24_nand.o
+                0x00013668                DEVICE_NAND_ECC_info
+                0x00013688                DEVICE_NAND_BB_info
+                0x00013694                DEVICE_NAND_PAGE_layout
+                0x000136ec                DEVICE_NAND_CHIP_infoTable
+ *(.rodata)
+                0x000137c4                . = ALIGN (0x4)
+
+.data           0x000137c4        0x0 load address 0x000037a4
+ *(.data)
+ .data          0x000137c4        0x0 ubl_DM36x_ARM270_DDR216_OSC24_nand.o
+ .data          0x000137c4        0x0 boot_DM36x_ARM270_DDR216_OSC24_nand.o
+ .data          0x000137c4        0x0 selfcopy_DM36x_ARM270_DDR216_OSC24_nand.o
+ .data          0x000137c4        0x0 uartboot_DM36x_ARM270_DDR216_OSC24_nand.o
+ .data          0x000137c4        0x0 device_DM36x_ARM270_DDR216_OSC24_nand.o
+ .data          0x000137c4        0x0 debug_DM36x_ARM270_DDR216_OSC24_nand.o
+ .data          0x000137c4        0x0 uart_DM36x_ARM270_DDR216_OSC24_nand.o
+ .data          0x000137c4        0x0 util_DM36x_ARM270_DDR216_OSC24_nand.o
+ .data          0x000137c4        0x0 nand_DM36x_ARM270_DDR216_OSC24_nand.o
+ .data          0x000137c4        0x0 nandboot_DM36x_ARM270_DDR216_OSC24_nand.o
+ .data          0x000137c4        0x0 device_nand_DM36x_ARM270_DDR216_OSC24_nand.o
+ .data          0x000137c4        0x0 /tmp/ccqvDxFM.o
+ .data          0x000137c4        0x0 /tmp/cczd4xk8.o
+                0x000137c4                . = ALIGN (0x4)
+                0x02003790                __selfcopysrcend = (((((__selfcopysrc + SIZEOF (.selfcopy)) + SIZEOF (.boot)) + SIZEOF (.text)) + SIZEOF (.data)) + SIZEOF (.rodata))
+
+.bss            0x000137c4       0x24 load address 0x000037a4
+ *(.bss)
+ .bss           0x000137c4        0x4 ubl_DM36x_ARM270_DDR216_OSC24_nand.o
+ .bss           0x000137c8        0x0 boot_DM36x_ARM270_DDR216_OSC24_nand.o
+ .bss           0x000137c8        0x0 selfcopy_DM36x_ARM270_DDR216_OSC24_nand.o
+ .bss           0x000137c8        0x0 uartboot_DM36x_ARM270_DDR216_OSC24_nand.o
+ .bss           0x000137c8        0x0 device_DM36x_ARM270_DDR216_OSC24_nand.o
+ .bss           0x000137c8        0x0 debug_DM36x_ARM270_DDR216_OSC24_nand.o
+ .bss           0x000137c8        0x0 uart_DM36x_ARM270_DDR216_OSC24_nand.o
+ .bss           0x000137c8        0x4 util_DM36x_ARM270_DDR216_OSC24_nand.o
+ .bss           0x000137cc        0x0 nand_DM36x_ARM270_DDR216_OSC24_nand.o
+ .bss           0x000137cc        0x0 nandboot_DM36x_ARM270_DDR216_OSC24_nand.o
+ .bss           0x000137cc        0x0 device_nand_DM36x_ARM270_DDR216_OSC24_nand.o
+ .bss           0x000137cc        0x0 /tmp/ccqvDxFM.o
+ .bss           0x000137cc        0x0 /tmp/cczd4xk8.o
+ *(COMMON)
+ COMMON         0x000137cc        0x4 ubl_DM36x_ARM270_DDR216_OSC24_nand.o
+                0x000137cc                gEntryPoint
+ COMMON         0x000137d0       0x18 nandboot_DM36x_ARM270_DDR216_OSC24_nand.o
+                0x000137d0                gNandBoot
+                0x000137e8                . = ALIGN (0x4)
+LOAD ubl_DM36x_ARM270_DDR216_OSC24_nand.o
+LOAD boot_DM36x_ARM270_DDR216_OSC24_nand.o
+LOAD selfcopy_DM36x_ARM270_DDR216_OSC24_nand.o
+LOAD uartboot_DM36x_ARM270_DDR216_OSC24_nand.o
+LOAD device_DM36x_ARM270_DDR216_OSC24_nand.o
+LOAD debug_DM36x_ARM270_DDR216_OSC24_nand.o
+LOAD uart_DM36x_ARM270_DDR216_OSC24_nand.o
+LOAD util_DM36x_ARM270_DDR216_OSC24_nand.o
+LOAD nand_DM36x_ARM270_DDR216_OSC24_nand.o
+LOAD nandboot_DM36x_ARM270_DDR216_OSC24_nand.o
+LOAD device_nand_DM36x_ARM270_DDR216_OSC24_nand.o
+LOAD /tmp/ccqvDxFM.o
+LOAD /tmp/cczd4xk8.o
+OUTPUT(ubl_DM36x_ARM270_DDR216_OSC24_nand elf32-littlearm)
+
+.comment        0x00000000      0x1d9
+ .comment       0x00000000       0x2b ubl_DM36x_ARM270_DDR216_OSC24_nand.o
+ .comment       0x0000002b       0x2b boot_DM36x_ARM270_DDR216_OSC24_nand.o
+ .comment       0x00000056       0x2b selfcopy_DM36x_ARM270_DDR216_OSC24_nand.o
+ .comment       0x00000081       0x2b uartboot_DM36x_ARM270_DDR216_OSC24_nand.o
+ .comment       0x000000ac       0x2b device_DM36x_ARM270_DDR216_OSC24_nand.o
+ .comment       0x000000d7       0x2b debug_DM36x_ARM270_DDR216_OSC24_nand.o
+ .comment       0x00000102       0x2b uart_DM36x_ARM270_DDR216_OSC24_nand.o
+ .comment       0x0000012d       0x2b util_DM36x_ARM270_DDR216_OSC24_nand.o
+ .comment       0x00000158       0x2b nand_DM36x_ARM270_DDR216_OSC24_nand.o
+ .comment       0x00000183       0x2b nandboot_DM36x_ARM270_DDR216_OSC24_nand.o
+ .comment       0x000001ae       0x2b device_nand_DM36x_ARM270_DDR216_OSC24_nand.o
+
+.note.GNU-stack
+                0x00000000        0x0
+ .note.GNU-stack
+                0x00000000        0x0 ubl_DM36x_ARM270_DDR216_OSC24_nand.o
+ .note.GNU-stack
+                0x00000000        0x0 boot_DM36x_ARM270_DDR216_OSC24_nand.o
+ .note.GNU-stack
+                0x00000000        0x0 selfcopy_DM36x_ARM270_DDR216_OSC24_nand.o
+ .note.GNU-stack
+                0x00000000        0x0 uartboot_DM36x_ARM270_DDR216_OSC24_nand.o
+ .note.GNU-stack
+                0x00000000        0x0 device_DM36x_ARM270_DDR216_OSC24_nand.o
+ .note.GNU-stack
+                0x00000000        0x0 debug_DM36x_ARM270_DDR216_OSC24_nand.o
+ .note.GNU-stack
+                0x00000000        0x0 uart_DM36x_ARM270_DDR216_OSC24_nand.o
+ .note.GNU-stack
+                0x00000000        0x0 util_DM36x_ARM270_DDR216_OSC24_nand.o
+ .note.GNU-stack
+                0x00000000        0x0 nand_DM36x_ARM270_DDR216_OSC24_nand.o
+ .note.GNU-stack
+                0x00000000        0x0 nandboot_DM36x_ARM270_DDR216_OSC24_nand.o
+ .note.GNU-stack
+                0x00000000        0x0 device_nand_DM36x_ARM270_DDR216_OSC24_nand.o
+
+.ARM.attributes
+                0x00000000       0x2f
+ .ARM.attributes
+                0x00000000       0x31 ubl_DM36x_ARM270_DDR216_OSC24_nand.o
+ .ARM.attributes
+                0x00000031       0x31 boot_DM36x_ARM270_DDR216_OSC24_nand.o
+ .ARM.attributes
+                0x00000062       0x31 selfcopy_DM36x_ARM270_DDR216_OSC24_nand.o
+ .ARM.attributes
+                0x00000093       0x31 uartboot_DM36x_ARM270_DDR216_OSC24_nand.o
+ .ARM.attributes
+                0x000000c4       0x31 device_DM36x_ARM270_DDR216_OSC24_nand.o
+ .ARM.attributes
+                0x000000f5       0x31 debug_DM36x_ARM270_DDR216_OSC24_nand.o
+ .ARM.attributes
+                0x00000126       0x31 uart_DM36x_ARM270_DDR216_OSC24_nand.o
+ .ARM.attributes
+                0x00000157       0x31 util_DM36x_ARM270_DDR216_OSC24_nand.o
+ .ARM.attributes
+                0x00000188       0x31 nand_DM36x_ARM270_DDR216_OSC24_nand.o
+ .ARM.attributes
+                0x000001b9       0x31 nandboot_DM36x_ARM270_DDR216_OSC24_nand.o
+ .ARM.attributes
+                0x000001ea       0x31 device_nand_DM36x_ARM270_DDR216_OSC24_nand.o
+ .ARM.attributes
+                0x0000021b       0x14 /tmp/ccqvDxFM.o
+ .ARM.attributes
+                0x0000022f       0x14 /tmp/cczd4xk8.o
